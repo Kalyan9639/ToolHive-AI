@@ -1,0 +1,13 @@
+[project]
+name = "ai-updates"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "agno>=2.5.2",
+    "bs4>=0.0.2",
+    "ddgs>=9.10.0",
+    "google-genai>=1.64.0",
+    "pandas>=3.0.1",
+]
