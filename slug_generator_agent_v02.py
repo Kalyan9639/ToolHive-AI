@@ -1,0 +1,174 @@
+import pandas as pd
+import time
+import os
+import re
+import json
+from dotenv import load_dotenv
+from agno.agent import Agent
+from agno.models.google import Gemini
+from agno.tools.duckduckgo import DuckDuckGoTools
+from agno.tools.csv_toolkit import CsvTools 
+
+load_dotenv()
+
+class ContentGenerator:
+    def __init__(self, input_csv="extracted_ai_tools.csv", output_json="generated_content.json"):
+        self.input_csv = input_csv
+        self.output_json = output_json
+        self.last_processed_index = -1
+        
+        # Initialize the Agno Agent
+        self.agent = Agent(
+            model=Gemini(id="gemini-2.5-flash-lite"),
+            tools=[DuckDuckGoTools(), CsvTools(csvs=[input_csv])],
+            description="You are an expert AI analyst who researches tools and writes concise, structured reports.",
+            instructions=[
+                "Use DuckDuckGo to search for the specific AI tool mentioned.",
+                "Verify the tool's details from the provided CSV context if needed.",
+                "Do not invent features; if information is missing, state that.",
+                "STRICT FORMATTING RULE: You must output the only report sections names in MARKDOWN format using specific headers(## or ###)."
+                "DON'T USE MARKDOWN for other texts except section headings in the report"
+            ],
+            markdown=False
+        )
+
+        # Initialize Output JSON if it doesn't exist
+        if not os.path.exists(self.output_json):
+            with open(self.output_json, 'w') as f:
+                json.dump([], f)
+            print(f"[Generator] Created output file: {self.output_json}")
+
+    def get_new_rows(self):
+        """Checks the input CSV for new rows since the last check."""
+        if not os.path.exists(self.input_csv):
+            return pd.DataFrame()
+
+        try:
+            # Read CSV - Migration in Scraper should have ensured 'Slug' column exists
+            df = pd.read_csv(self.input_csv)
+            
+            # Simple logic to process new rows
+            if self.last_processed_index == -1:
+                # Optional: Logic to skip already processed if rebooted, 
+                # but for now we reset to process whatever is new in this session logic
+                pass 
+            
+            if len(df) > self.last_processed_index + 1:
+                new_data = df.iloc[self.last_processed_index + 1:]
+                self.last_processed_index = len(df) - 1
+                return new_data
+            
+        except pd.errors.EmptyDataError:
+            return pd.DataFrame()
+        except Exception as e:
+            print(f"[Generator] Error reading CSV: {e}")
+            return pd.DataFrame()
+        
+        return pd.DataFrame()
+
+    def generate_content(self, tool_name, tool_desc):
+        """Uses the Agno agent to generate the report."""
+        print(f"\n[Generator] Researching: {tool_name}...")
+        
+        prompt = f"""
+        Research the AI tool named "{tool_name}". 
+        Context provided from scraper: "{tool_desc}".
+        
+        You MUST generate the report using the following Markdown headers EXACTLY. 
+        Do not add any introductory text before the first header.
+        
+        ## Overview
+        (Write 3-4 lines summarizing what it is)
+        
+        ## Key Features
+        (List 5 distinct bullet points)
+        
+        ## Usage
+        (List 5-6 distinct bullet points on how people use this tool)
+        
+        ## Pros
+        (List 3-4 points)
+        
+        ## Cons
+        (List 3-4 points)
+        
+        Focus on accuracy and strictly follow this format for Regex parsing.
+        Include no preamble and postamble.
+        """
+
+        try:
+            # Run the agent
+            response = self.agent.run(prompt)
+            return response.content
+        except Exception as e:
+            print(f"[!] Error generating content: {e}")
+            return "Generation Failed"
+
+    def parse_and_save(self, tool_name, tool_slug, content):
+        """Parses the agent output using Regex and saves to JSON."""
+        
+        # Regex patterns to extract sections
+        overview_match = re.search(r"##\s*Overview(.*?)(?=##|$)", content, re.DOTALL | re.IGNORECASE)
+        features_match = re.search(r"##\s*Key Features(.*?)(?=##|$)", content, re.DOTALL | re.IGNORECASE)
+        usage_match = re.search(r"##\s*Usage(.*?)(?=##|$)", content, re.DOTALL | re.IGNORECASE)
+        pros_match = re.search(r"##\s*Pros(.*?)(?=##\s*Cons|$)", content, re.DOTALL | re.IGNORECASE)
+        cons_match = re.search(r"##\s*Cons(.*?)(?=##|$)", content, re.DOTALL | re.IGNORECASE)
+
+        entry = {
+            'Tool Name': tool_name,
+            'Slug': tool_slug,
+            'Overview': overview_match.group(1).strip() if overview_match else "N/A",
+            'Key Features': features_match.group(1).strip() if features_match else "N/A",
+            'Usage': usage_match.group(1).strip() if usage_match else "N/A",
+            'Pros': pros_match.group(1).strip() if pros_match else "N/A",
+            'Cons': cons_match.group(1).strip() if cons_match else "N/A",
+            'Generated_At': time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+        # Read existing JSON, append, and write back
+        try:
+            if os.path.exists(self.output_json) and os.path.getsize(self.output_json) > 0:
+                existing_df = pd.read_json(self.output_json, orient='records')
+                new_df = pd.DataFrame([entry])
+                updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+            else:
+                updated_df = pd.DataFrame([entry])
+            
+            updated_df.to_json(self.output_json, orient='records', indent=4)
+            print(f"[Generator] Saved report for {tool_name} (Slug: {tool_slug})")
+            
+        except Exception as e:
+            print(f"[!] Error saving to JSON: {e}")
+
+    def start_monitoring(self, check_interval=2):
+        print(f"--- Generator Agent Started ---")
+        print(f"[*] Watching {self.input_csv} for updates...")
+
+        while True:
+            new_rows = self.get_new_rows()
+            
+            if not new_rows.empty:
+                print(f"[*] Detected {len(new_rows)} new tool(s).")
+                
+                for index, row in new_rows.iterrows():
+                    tool_name = row['Title']
+                    tool_desc = row['Description']
+                    
+                    # Robust Slug Extraction:
+                    # If the column exists (which it should now), use it.
+                    # Otherwise, fallback to a generated slug from title (as a failsafe)
+                    if 'Slug' in row and pd.notna(row['Slug']) and str(row['Slug']).strip() != "":
+                        tool_slug = row['Slug']
+                    else:
+                        print(f"[Generator] Warning: Slug missing for {tool_name}, generating on fly.")
+                        tool_slug = re.sub(r'[^a-z0-9\s-]', '', tool_name.lower())
+                        tool_slug = re.sub(r'\s+', '-', tool_slug).strip('-')
+                    
+                    content = self.generate_content(tool_name, tool_desc)
+                    self.parse_and_save(tool_name, tool_slug, content)
+            
+            time.sleep(check_interval)
+
+if __name__ == "__main__":
+    generator = ContentGenerator()
+    generator.start_monitoring()
