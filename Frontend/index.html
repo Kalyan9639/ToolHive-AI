@@ -19,7 +19,6 @@
             color: #334155;
         }
         
-        /* Ad Placeholder Styling */
         .ad-slot {
             background-color: #e2e8f0;
             border: 1px dashed #94a3b8;
@@ -44,7 +43,6 @@
             opacity: 0.7;
         }
 
-        /* Markdown-like list styling for injected content */
         .prose ul {
             list-style-type: disc;
             padding-left: 1.5rem;
@@ -54,13 +52,12 @@
             margin-bottom: 0.5rem;
         }
         
-        /* Utility */
         .hidden { display: none !important; }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
-    <!-- 🔴 LOADING VIEW (Visible by default to prevent flash) -->
+    <!-- LOADING VIEW -->
     <div id="loading-view" class="fixed inset-0 bg-white z-[100] flex items-center justify-center">
         <div class="text-center">
             <i class="fas fa-circle-notch fa-spin text-blue-600 text-4xl mb-4"></i>
@@ -78,26 +75,20 @@
                         <span class="font-bold text-xl text-gray-900 tracking-tight">AIxploria</span>
                     </div>
                 </div>
-                <div class="flex items-center">
-                   <!-- Optional Nav Items -->
-                </div>
             </div>
         </div>
     </nav>
 
-    <!-- 🔴 HOME VIEW (Hidden by default, shown via JS if no slug) -->
+    <!-- HOME VIEW -->
     <div id="home-view" class="hidden flex-grow max-w-4xl mx-auto px-4 py-16 w-full text-center">
         <h1 class="text-5xl font-extrabold text-gray-900 mb-8 tracking-tight">AI TOOL UPDATES</h1>
         <p class="text-xl text-gray-600 mb-12">Select a tool to view detailed analysis and reviews.</p>
-        
-        <!-- List of tools will be injected here for easier navigation -->
         <div id="tool-index" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 text-left">
-            <!-- Links generated via JS -->
             <p class="text-gray-500 col-span-full text-center">Loading available tools...</p>
         </div>
     </div>
 
-    <!-- 🔴 ERROR / STATUS VIEW -->
+    <!-- ERROR / STATUS VIEW -->
     <div id="status-view" class="hidden flex-grow flex items-center justify-center p-20">
         <div class="text-center">
             <h2 id="status-message" class="text-3xl font-bold text-gray-400">Detailed analysis coming soon.</h2>
@@ -105,49 +96,39 @@
         </div>
     </div>
 
-    <!-- 🔴 TOOL DETAIL VIEW (Hidden by default) -->
+    <!-- TOOL DETAIL VIEW -->
     <main id="tool-view" class="hidden max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-        <!-- 🔷 1. HERO SECTION -->
+        <!-- 1. HERO SECTION -->
         <section class="text-center mb-12">
             <div class="inline-block p-1 rounded-full bg-blue-50 mb-4 border border-blue-100">
-                <!-- Added no-referrer to bypass hotlink protection, and a transparent pixel to avoid premature error firing -->
-                <img id="hero-logo" class="h-20 w-20 rounded-full mx-auto object-cover bg-white" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Tool Logo" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='https://placehold.co/80x80/e2e8f0/64748b?text=AI'">
+                <img id="hero-logo" class="h-20 w-20 rounded-full mx-auto object-cover bg-white"
+                     src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Tool Logo"
+                     referrerpolicy="no-referrer"
+                     onerror="this.onerror=null; this.src='https://placehold.co/80x80/e2e8f0/64748b?text=AI'">
             </div>
             
             <div class="flex justify-center items-center gap-2 mb-4">
                 <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200" id="tool-category">Category</span>
             </div>
 
-            <h1 id="hero-title" class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
-                <!-- Tool Name -->
-            </h1>
+            <h1 id="hero-title" class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight"></h1>
 
-            <p id="hero-tagline" class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                <!-- Tagline -->
-            </p>
+            <p id="hero-tagline" class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed"></p>
 
-            <a id="visit-btn" href="#" target="_blank" rel="nofollow noopener" 
+            <a id="visit-btn" href="#" target="_blank" rel="nofollow noopener"
                class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
                 Visit Official Website <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </section>
 
-        <!-- 🔷 2. TOP AD SLOT -->
+        <!-- 2. TOP AD SLOT -->
         <div class="ad-slot">
             <span class="ad-label">Advertisement</span>
             <span class="text-xs">Google AdSense - Top Banner</span>
         </div>
 
-        <!-- 🔷 3. OVERVIEW -->
-        <section class="mb-12 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                <i class="fas fa-info-circle text-blue-500 mr-3"></i> What is <span class="tool-name-span ml-1">this tool</span>?
-            </h2>
-            <div id="overview-content" class="prose text-gray-700 leading-relaxed"></div>
-        </section>
-
-        <!-- 🔷 4. KEY FEATURES -->
+        <!-- 3. KEY FEATURES -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                 <i class="fas fa-star text-yellow-500 mr-3"></i> Key Features
@@ -157,25 +138,15 @@
             </div>
         </section>
 
-        <!-- 🔷 5. USAGE -->
-        <section class="mb-12">
-             <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                <i class="fas fa-users-cog text-green-500 mr-3"></i> How to Use
-            </h2>
-            <div class="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl border border-blue-100">
-                <div id="usage-content" class="prose text-gray-700 leading-relaxed"></div>
-            </div>
-        </section>
-
-        <!-- 🔷 6. MID AD SLOT -->
-        <div class="ad-slot">
+        <!-- 4. MID AD SLOT -->
+        <!-- <div class="ad-slot">
             <span class="ad-label">Advertisement</span>
             <span class="text-xs">Google AdSense - In-Article</span>
-        </div>
+        </div> -->
 
-        <!-- 🔷 7. PRICING -->
+        <!-- 5. PRICING -->
         <section class="mb-12">
-             <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                 <i class="fas fa-tags text-indigo-500 mr-3"></i> Pricing
             </h2>
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
@@ -186,7 +157,7 @@
             </div>
         </section>
 
-        <!-- 🔷 8. PROS & CONS -->
+        <!-- 6. PROS & CONS -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Pros & Cons</h2>
             <div class="grid md:grid-cols-2 gap-6">
@@ -205,17 +176,17 @@
             </div>
         </section>
         
-        <!-- 🔷 9. BOTTOM AD SLOT -->
-        <div class="ad-slot">
+        <!-- 7. BOTTOM AD SLOT -->
+        <!-- <div class="ad-slot">
             <span class="ad-label">Advertisement</span>
             <span class="text-xs">Google AdSense - Multiplex</span>
-        </div>
+        </div> -->
 
-        <!-- 🔷 10. CONCLUSION -->
+        <!-- 8. CONCLUSION -->
         <section class="mb-12 text-center">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Final Verdict</h2>
             <p id="conclusion-text" class="text-gray-600 mb-8 max-w-2xl mx-auto"></p>
-            <a id="visit-btn-bottom" href="#" target="_blank" rel="nofollow noopener" 
+            <a id="visit-btn-bottom" href="#" target="_blank" rel="nofollow noopener"
                class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors">
                 Try <span class="tool-name-span mx-1">Tool</span> Now
             </a>
@@ -232,119 +203,101 @@
         </div>
     </footer>
 
-    <!-- LOGIC -->
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('year').textContent = new Date().getFullYear();
 
-            // 1. Get Slug from URL (Support 'slug' param as requested, fallback to 'id')
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('slug') || urlParams.get('id');
 
-            let csvText = "";
             let jsonData = null;
 
-            // 2. Fetch Data Sources dynamically
             try {
                 const protocol = window.location.protocol;
 
-                // Check if user is opening directly from their hard drive (file:// protocol)
                 if (protocol === 'file:') {
                     throw new Error("FILE_PROTOCOL_ERROR");
                 }
-                
-                // Check if we are running in the Canvas preview environment (blob: protocol)
+
                 if (protocol === 'blob:' || protocol === 'data:') {
                     throw new Error("PREVIEW_ENVIRONMENT");
                 }
 
-                // CACHE-BUSTER: Adding a timestamp so the browser ALWAYS gets the newest file
                 const cacheBuster = new Date().getTime();
-                
-                const [csvResponse, jsonResponse] = await Promise.all([
-                    fetch(`extracted_ai_tools.csv?t=${cacheBuster}`),
-                    fetch(`generated_content.json?t=${cacheBuster}`)
-                ]);
+                const jsonResponse = await fetch(`ai_tools.json?t=${cacheBuster}`);
 
-                if (!csvResponse.ok || !jsonResponse.ok) {
-                    throw new Error("Failed to load data files. Ensure they exist on the server.");
+                if (!jsonResponse.ok) {
+                    throw new Error("Failed to load ai_tools.json. Ensure it exists on the server.");
                 }
 
-                csvText = await csvResponse.text();
                 jsonData = await jsonResponse.json();
 
             } catch (error) {
-                // If it fails because of blob URL parsing errors (TypeError) or explicit PREVIEW error
                 const isUrlError = error.name === 'TypeError' && error.message.includes('URL');
 
                 if (error.message === "PREVIEW_ENVIRONMENT" || isUrlError) {
-                    console.log("Preview environment detected. Using fallback data to render the UI.");
-                    // Fallback data allows the preview to load properly instead of crashing.
-                    csvText = `Title,Slug,Category,Description,Link,Logo,Scraped_At\nThumbnailCreator.com,thumbnailcreatorcom,#AIxploria Selection#Image Generators+1,"Quickly create eye-catching thumbnails for your videos on YouTube, Twitch and Facebook with AI. Attract more views and easily improve the click-through rate on your video clips",https://www.aixploria.com/en/thumbnailcreator-com-ai/,https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=https://www.thumbnailcreator.com/,2026-02-19 18:16:22`;
-                    
+                    console.log("Preview environment detected. Using fallback data.");
                     jsonData = [{
-                        "Tool Name": "ThumbnailCreator.com",
+                        "Title": "ThumbnailCreator.com",
                         "Slug": "thumbnailcreatorcom",
-                        "Overview": "ThumbnailCreator.com is an AI-powered tool designed for generating compelling thumbnails for video content across platforms like YouTube, Twitch, and Facebook. Its primary goal is to help creators increase viewer engagement and improve click-through rates by producing visually appealing thumbnail images.",
+                        "Category": "Image Generators",
+                        "Description": "Quickly create eye-catching thumbnails for your videos on YouTube, Twitch and Facebook with AI.",
+                        "Link": "https://www.thumbnailcreator.com/",
+                        "Logo": "https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=https://www.thumbnailcreator.com/",
+                        "Scraped_At": "2026-02-19 18:16:22",
                         "Key Features": "* AI-powered thumbnail generation\n* Platform-specific optimization (YouTube, Twitch, Facebook)\n* Focus on increasing click-through rates\n* Creation of eye-catching visuals\n* Assistance in attracting more video views",
-                        "Usage": "* Uploading video content or providing links to videos.\n* Selecting platform for the thumbnail (e.g., YouTube).\n* Utilizing AI suggestions for thumbnail design elements.\n* Customizing generated thumbnails with text, graphics, and branding.\n* Downloading the final thumbnail for use on video platforms.\n* Integrating with video editing workflows.",
                         "Pros": "* Enhances video visibility through attractive thumbnails.\n* Saves time by automating thumbnail creation.\n* Aims to boost viewer engagement and click-through rates.\n* User-friendly interface for quick results.",
-                        "Cons": "* Specific AI customization options may be limited.\n* Reliance on AI might reduce unique artistic control for some users.\n* Potential subscription costs or limitations on free usage are not detailed.\n* Effectiveness can vary based on the user's content and target audience.",
+                        "Cons": "* Specific AI customization options may be limited.\n* Reliance on AI might reduce unique artistic control.\n* Potential subscription costs are not detailed.\n* Effectiveness can vary based on target audience.",
                         "Generated_At": "2026-02-19 18:16:28"
                     }];
+
                 } else if (error.message === "FILE_PROTOCOL_ERROR") {
-                    document.getElementById('loading-view').classList.add('hidden'); // Hide loading
+                    document.getElementById('loading-view').classList.add('hidden');
                     const toolIndex = document.getElementById('tool-index');
                     const homeView = document.getElementById('home-view');
-                    
+
                     toolIndex.innerHTML = `
                         <div class="col-span-full bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg text-left shadow-sm">
                             <h3 class="text-xl font-bold text-red-800 mb-2"><i class="fas fa-exclamation-triangle"></i> Local Security Restriction (CORS)</h3>
-                            <p class="text-red-700 mb-4">Browsers block fetching JSON and CSV files when you open HTML directly from your hard drive (using the <code>file:///</code> protocol).</p>
+                            <p class="text-red-700 mb-4">Browsers block fetching JSON files when you open HTML directly from your hard drive (<code>file:///</code> protocol).</p>
                             <h4 class="font-bold text-red-900">How to fix this to test locally:</h4>
                             <ol class="list-decimal pl-5 mt-2 space-y-2 text-red-800">
                                 <li>Open your project folder in <strong>VS Code</strong>.</li>
                                 <li>Install the <strong>Live Server</strong> extension.</li>
                                 <li>Click <strong>Go Live</strong> in the bottom right corner.</li>
-                                <li>This will open the site on a local server (e.g., <code>http://127.0.0.1:5500</code>) and your dynamic files will load instantly.</li>
+                                <li>This will open the site on a local server (e.g., <code>http://127.0.0.1:5500</code>) and your files will load instantly.</li>
                             </ol>
                         </div>
                     `;
                     if (slug) showError("Cannot load tool data due to local file security restrictions.");
                     if (!slug) homeView.classList.remove('hidden');
-                    return; // Stop execution
+                    return;
+
                 } else {
-                    document.getElementById('loading-view').classList.add('hidden'); // Hide loading
+                    document.getElementById('loading-view').classList.add('hidden');
                     const toolIndex = document.getElementById('tool-index');
                     const homeView = document.getElementById('home-view');
 
-                    toolIndex.innerHTML = `<p class='text-red-500 col-span-full'>Unable to fetch data files. Please check if <code>extracted_ai_tools.csv</code> and <code>generated_content.json</code> exist in the same folder.</p>`;
-                    if (slug) showError("Detailed analysis coming soon. (Check if files are uploaded to server)"); 
+                    toolIndex.innerHTML = `<p class='text-red-500 col-span-full'>Unable to fetch <code>ai_tools.json</code>. Please check it exists in the same folder as this HTML file.</p>`;
+                    if (slug) showError("Detailed analysis coming soon. (Check if ai_tools.json is uploaded to server)");
                     if (!slug) homeView.classList.remove('hidden');
-                    return; // Stop execution
+                    return;
                 }
             }
 
-            // --- IF FETCH SUCCEEDS (OR PREVIEW FALLBACK USED), CONTINUE RENDERING ---
             try {
-                // Parse CSV
-                const csvData = parseCSV(csvText);
-
-                // 3. Logic: Decide which view to show
                 if (!slug) {
-                    renderHomePage(csvData);
+                    renderHomePage(jsonData);
                 } else {
-                    renderToolPage(slug, csvData, jsonData);
+                    renderToolPage(slug, jsonData);
                 }
-
             } catch (error) {
                 console.error("Error rendering data:", error);
-                document.getElementById('loading-view').classList.add('hidden'); // Hide loading
-                
+                document.getElementById('loading-view').classList.add('hidden');
                 if (slug) {
-                    showError("Error formatting tool data."); 
+                    showError("Error formatting tool data.");
                 } else {
-                    document.getElementById('tool-index').innerHTML = "<p class='text-red-500'>Unable to parse tools. Please check the data format in your files.</p>";
+                    document.getElementById('tool-index').innerHTML = "<p class='text-red-500'>Unable to parse tools. Please check the format of ai_tools.json.</p>";
                     document.getElementById('home-view').classList.remove('hidden');
                 }
             }
@@ -352,15 +305,14 @@
 
         // --- Render Functions ---
 
-        function renderHomePage(csvData) {
+        function renderHomePage(jsonData) {
             const loadingView = document.getElementById('loading-view');
             const homeView = document.getElementById('home-view');
             const toolIndex = document.getElementById('tool-index');
-            
+
             toolIndex.innerHTML = '';
 
-            // Generate links for all tools in CSV dynamically
-            csvData.forEach(tool => {
+            jsonData.forEach(tool => {
                 if (tool.Slug && tool.Title) {
                     const card = document.createElement('a');
                     card.href = `?slug=${tool.Slug}`;
@@ -373,66 +325,55 @@
                 }
             });
 
-            if(toolIndex.innerHTML === '') {
-                 toolIndex.innerHTML = '<p class="text-gray-500">No tools found in the CSV yet.</p>';
+            if (toolIndex.innerHTML === '') {
+                toolIndex.innerHTML = '<p class="text-gray-500 col-span-full text-center">No tools found in ai_tools.json yet.</p>';
             }
 
-            // Transition
             loadingView.classList.add('hidden');
             homeView.classList.remove('hidden');
         }
 
-        function renderToolPage(slug, csvData, jsonData) {
+        function renderToolPage(slug, jsonData) {
             const loadingView = document.getElementById('loading-view');
             const toolView = document.getElementById('tool-view');
-            
-            // Find Data matching the URL slug
-            const csvTool = csvData.find(item => item.Slug === slug);
-            const jsonTool = jsonData.find(item => item.Slug === slug);
 
-            if (!csvTool || !jsonTool) {
+            // All data now comes from the single merged JSON record
+            const tool = jsonData.find(item => item.Slug === slug);
+
+            if (!tool) {
                 loadingView.classList.add('hidden');
                 showError("Detailed analysis for this tool is coming soon.");
                 return;
             }
 
-            // --- Fill Data ---
-            
-            // Meta & Nav
-            document.title = `${csvTool.Title} - Review & Features`;
+            // Meta
+            document.title = `${tool.Title} - Review & Features`;
             const metaDesc = document.querySelector('meta[name="description"]');
-            if(metaDesc) metaDesc.setAttribute("content", `Review of ${csvTool.Title}. ${csvTool.Description}`);
-            
+            if (metaDesc) metaDesc.setAttribute("content", `Review of ${tool.Title}. ${tool.Description}`);
+
             // Hero
-            setText('nav-title', csvTool.Title); 
-            
-            // We only apply the URL if it's available, otherwise fallback handles it safely
-            setSrc('hero-logo', csvTool.Logo);
-            
-            setText('tool-category', cleanCategory(csvTool.Category));
-            setText('hero-title', csvTool.Title);
-            setText('hero-tagline', csvTool.Description);
-            
-            // Buttons
-            const links = document.querySelectorAll('#visit-btn, #visit-btn-bottom');
-            links.forEach(a => a.href = csvTool.Link);
+            setSrc('hero-logo', tool.Logo);
+            setText('tool-category', cleanCategory(tool.Category));
+            setText('hero-title', tool.Title);
+            setText('hero-tagline', tool.Description);
 
-            // Content from JSON
-            setHTML('overview-content', formatText(jsonTool.Overview));
-            setHTML('features-list', formatList(jsonTool['Key Features']));
-            setHTML('usage-content', formatList(jsonTool.Usage));
-            setText('pricing-text', "Free/Freemium. This may vary. Please check the official website."); // Fallback
-            setHTML('pros-content', formatList(jsonTool.Pros));
-            setHTML('cons-content', formatList(jsonTool.Cons));
-            
-            // Dynamic Spans
-            document.querySelectorAll('.tool-name-span').forEach(el => el.textContent = csvTool.Title);
+            // Visit buttons
+            document.querySelectorAll('#visit-btn, #visit-btn-bottom').forEach(a => a.href = tool.Link || '#');
 
-            // Conclusion Logic
-            const conclusion = `If you're looking for a tool in the ${cleanCategory(csvTool.Category)} space, ${csvTool.Title} is worth checking out. It aims to streamline your workflow with AI capabilities tailored for ${csvTool.Description.split('.')[0]}.`;
+            // Generated content sections
+            setHTML('features-list', formatList(tool['Key Features']));
+            setText('pricing-text', "💰 Free/Freemium.");
+            setHTML('pros-content', formatList(tool.Pros));
+            setHTML('cons-content', formatList(tool.Cons));
+
+            // Dynamic tool name spans
+            document.querySelectorAll('.tool-name-span').forEach(el => el.textContent = tool.Title);
+
+            // Conclusion
+            const descSnippet = (tool.Description || '').split('.')[0];
+            const conclusion = `If you're looking for a tool in the ${cleanCategory(tool.Category)} space, ${tool.Title} is worth checking out. It aims to streamline your workflow with AI capabilities tailored for ${descSnippet}.`;
             setText('conclusion-text', conclusion);
 
-            // Transition
             loadingView.classList.add('hidden');
             toolView.classList.remove('hidden');
         }
@@ -460,76 +401,24 @@
         function setSrc(id, src) {
             const el = document.getElementById(id);
             if (el) {
-                if (src && src.trim() !== '') {
-                    el.src = src;
-                } else {
-                    // Force the fallback if the CSV literally gave us a blank logo string
-                    el.src = 'https://placehold.co/80x80/e2e8f0/64748b?text=AI';
-                }
+                el.src = (src && src.trim() !== '')
+                    ? src
+                    : 'https://placehold.co/80x80/e2e8f0/64748b?text=AI';
             }
         }
 
         function cleanCategory(cat) {
             if (!cat) return "AI Tool";
-            // Remove hashtags and numbers often found in scraped data
             return cat.replace(/#/g, '').replace(/\+\d+/, '').replace('AIxploria Selection', '').trim();
-        }
-
-        function formatText(text) {
-            if (!text) return '';
-            return `<p>${text}</p>`;
         }
 
         function formatList(text) {
             if (!text) return '';
-            // Detect if text is already HTML-like or markdown bullets
             if (text.includes('<li>')) return text;
-            
-            // Split by newlines or asterisks
             const lines = text.split(/\n|\*/).filter(line => line.trim().length > 0);
-            return `<ul class="list-disc pl-5 space-y-2">` + 
-                   lines.map(line => `<li>${line.trim()}</li>`).join('') + 
+            return `<ul class="list-disc pl-5 space-y-2">` +
+                   lines.map(line => `<li>${line.trim()}</li>`).join('') +
                    `</ul>`;
-        }
-
-        // Simple CSV Parser
-        function parseCSV(text) {
-            const lines = text.trim().split('\n');
-            if (lines.length === 0) return [];
-            
-            const headers = lines[0].split(',').map(h => h.trim());
-            
-            return lines.slice(1).map(line => {
-                // Skip empty lines
-                if (!line.trim()) return null;
-
-                const values = [];
-                let current = '';
-                let inQuotes = false;
-                
-                for (let i = 0; i < line.length; i++) {
-                    const char = line[i];
-                    if (char === '"') {
-                        inQuotes = !inQuotes;
-                    } else if (char === ',' && !inQuotes) {
-                        values.push(current.trim());
-                        current = '';
-                    } else {
-                        current += char;
-                    }
-                }
-                values.push(current.trim()); // Last value
-
-                // Map headers to values
-                const entry = {};
-                headers.forEach((header, index) => {
-                    // Remove quotes if present
-                    let val = values[index] || '';
-                    if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
-                    entry[header] = val;
-                });
-                return entry;
-            }).filter(item => item !== null);
         }
     </script>
 </body>
