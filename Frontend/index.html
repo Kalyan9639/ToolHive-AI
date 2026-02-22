@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tool Updates - Review & Overview</title>
+    <meta name="description" content="Detailed reviews and updates on the latest AI tools.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; }
+        .ad-slot {
+            background-color: #e2e8f0; border: 1px dashed #94a3b8; color: #64748b;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            margin: 2rem 0; padding: 1rem; min-height: 250px; border-radius: 0.5rem;
+            text-align: center; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase;
+        }
+        .ad-label { font-weight: 700; margin-bottom: 0.5rem; opacity: 0.7; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .prose li { margin-bottom: 0.5rem; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <!-- LOADING VIEW -->
+    <div id="loading-view" class="fixed inset-0 bg-white z-[100] flex items-center justify-center">
+        <div class="text-center">
+            <i class="fas fa-circle-notch fa-spin text-blue-600 text-4xl mb-4"></i>
+            <p class="text-gray-500 font-medium">Loading analysis...</p>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <i class="fas fa-robot text-blue-600 text-2xl"></i>
+                    <span class="font-bold text-xl text-gray-900 tracking-tight">AIxploria</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME VIEW -->
+    <div id="home-view" class="hidden flex-grow max-w-4xl mx-auto px-4 py-16 w-full text-center">
+        <h1 class="text-5xl font-extrabold text-gray-900 mb-8 tracking-tight">AI TOOL UPDATES</h1>
+        <p class="text-xl text-gray-600 mb-12">Select a tool to view detailed analysis and reviews.</p>
+        <div id="tool-index" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 text-left">
+            <p class="text-gray-500 col-span-full text-center">Loading available tools...</p>
+        </div>
+    </div>
+
+    <!-- ERROR / STATUS VIEW -->
+    <div id="status-view" class="hidden flex-grow flex items-center justify-center p-20">
+        <div class="text-center">
+            <h2 id="status-message" class="text-3xl font-bold text-gray-400">Detailed analysis coming soon.</h2>
+            <a href="index.html" class="mt-4 inline-block text-blue-600 hover:underline">Return Home</a>
+        </div>
+    </div>
+
+    <!-- TOOL DETAIL VIEW -->
+    <main id="tool-view" class="hidden max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- 1. HERO SECTION -->
+        <section class="text-center mb-12">
+            <div class="inline-block p-1 rounded-full bg-blue-50 mb-4 border border-blue-100">
+                <img id="hero-logo" class="h-20 w-20 rounded-full mx-auto object-cover bg-white"
+                     src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Tool Logo"
+                     referrerpolicy="no-referrer"
+                     onerror="this.onerror=null; this.src='https://placehold.co/80x80/e2e8f0/64748b?text=AI'">
+            </div>
+            <div class="flex justify-center items-center gap-2 mb-4">
+                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-200" id="tool-category">Category</span>
+            </div>
+            <h1 id="hero-title" class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight"></h1>
+            <p id="hero-tagline" class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed"></p>
+            <a id="visit-btn" href="#" target="_blank" rel="nofollow noopener"
+               class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
+                Visit Official Website <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+
+        <!-- 2. TOP AD SLOT -->
+        <div class="ad-slot">
+            <span class="ad-label">Advertisement</span>
+            <span class="text-xs">Google AdSense - Top Banner</span>
+        </div>
+
+        <!-- 3. KEY FEATURES -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <i class="fas fa-star text-yellow-500 mr-3"></i> Key Features
+            </h2>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div id="features-list" class="p-8 prose text-gray-700"></div>
+            </div>
+        </section>
+
+        <!-- 4. MID AD SLOT -->
+        <div class="ad-slot">
+            <span class="ad-label">Advertisement</span>
+            <span class="text-xs">Google AdSense - In-Article</span>
+        </div>
+
+        <!-- 5. PRICING -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <i class="fas fa-tags text-indigo-500 mr-3"></i> Pricing
+            </h2>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
+                <p class="text-lg text-gray-700" id="pricing-text"></p>
+                <div class="mt-4 text-sm text-gray-500">*Prices are subject to change. Check official website for details.</div>
+            </div>
+        </section>
+
+        <!-- 6. PROS & CONS -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Pros & Cons</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-green-50 p-6 rounded-xl border border-green-100">
+                    <h3 class="text-xl font-bold text-green-800 mb-4 flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i> Pros
+                    </h3>
+                    <div id="pros-content" class="prose text-green-900 text-sm"></div>
+                </div>
+                <div class="bg-red-50 p-6 rounded-xl border border-red-100">
+                    <h3 class="text-xl font-bold text-red-800 mb-4 flex items-center">
+                        <i class="fas fa-times-circle mr-2"></i> Cons
+                    </h3>
+                    <div id="cons-content" class="prose text-red-900 text-sm"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. BOTTOM AD SLOT -->
+        <div class="ad-slot">
+            <span class="ad-label">Advertisement</span>
+            <span class="text-xs">Google AdSense - Multiplex</span>
+        </div>
+
+        <!-- 8. CONCLUSION -->
+        <section class="mb-12 text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Final Verdict</h2>
+            <p id="conclusion-text" class="text-gray-600 mb-8 max-w-2xl mx-auto"></p>
+            <a id="visit-btn-bottom" href="#" target="_blank" rel="nofollow noopener"
+               class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors">
+                Try <span class="tool-name-span mx-1">Tool</span> Now
+            </a>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-400 text-sm">
+                &copy; <span id="year"></span> AIxploria. All rights reserved.<br>
+                This site uses affiliate links and display ads to support its operations.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // CONFIG — paste your npoint GET endpoint URL here
+        // ============================================================
+        const NPOINT_API_URL = "https://api.npoint.io/73755f90dab6547eb787";
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug') || urlParams.get('id');
+
+            let jsonData = null;
+
+            try {
+                // Cache-buster so the browser always fetches fresh data from npoint
+                const cacheBuster = new Date().getTime();
+                const response = await fetch(`${NPOINT_API_URL}?t=${cacheBuster}`);
+
+                if (!response.ok) {
+                    throw new Error(`npoint fetch failed with status ${response.status}`);
+                }
+
+                jsonData = await response.json();
+
+            } catch (error) {
+                console.error("[Fetch Error]", error);
+                document.getElementById('loading-view').classList.add('hidden');
+
+                const toolIndex = document.getElementById('tool-index');
+                const homeView  = document.getElementById('home-view');
+
+                toolIndex.innerHTML = `
+                    <div class="col-span-full bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg text-left shadow-sm">
+                        <h3 class="text-xl font-bold text-red-800 mb-2">
+                            <i class="fas fa-exclamation-triangle"></i> Could not load data
+                        </h3>
+                        <p class="text-red-700">
+                            Unable to fetch from npoint. Check that <code>NPOINT_API_URL</code> is set
+                            correctly in the script and that your npoint endpoint is published and public.
+                        </p>
+                        <p class="text-red-500 text-sm mt-2">Error: ${error.message}</p>
+                    </div>`;
+
+                if (slug) showError("Detailed analysis coming soon. (Data source unavailable)");
+                if (!slug) homeView.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                if (!slug) {
+                    renderHomePage(jsonData);
+                } else {
+                    renderToolPage(slug, jsonData);
+                }
+            } catch (error) {
+                console.error("Render error:", error);
+                document.getElementById('loading-view').classList.add('hidden');
+                if (slug) {
+                    showError("Error formatting tool data.");
+                } else {
+                    document.getElementById('tool-index').innerHTML =
+                        "<p class='text-red-500'>Unable to parse tools. Check npoint data format.</p>";
+                    document.getElementById('home-view').classList.remove('hidden');
+                }
+            }
+        });
+
+        // --- Render Functions ---
+
+        function renderHomePage(jsonData) {
+            const loadingView = document.getElementById('loading-view');
+            const homeView    = document.getElementById('home-view');
+            const toolIndex   = document.getElementById('tool-index');
+
+            toolIndex.innerHTML = '';
+
+            jsonData.forEach(tool => {
+                if (tool.Slug && tool.Title) {
+                    const card = document.createElement('a');
+                    card.href      = `?slug=${tool.Slug}`;
+                    card.className = "block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 transition";
+                    card.innerHTML = `
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">${tool.Title}</h5>
+                        <p class="font-normal text-gray-700 text-sm">${cleanCategory(tool.Category)}</p>
+                    `;
+                    toolIndex.appendChild(card);
+                }
+            });
+
+            if (toolIndex.innerHTML === '') {
+                toolIndex.innerHTML = '<p class="text-gray-500 col-span-full text-center">No tools found yet.</p>';
+            }
+
+            loadingView.classList.add('hidden');
+            homeView.classList.remove('hidden');
+        }
+
+        function renderToolPage(slug, jsonData) {
+            const loadingView = document.getElementById('loading-view');
+            const toolView    = document.getElementById('tool-view');
+
+            const tool = jsonData.find(item => item.Slug === slug);
+
+            if (!tool) {
+                loadingView.classList.add('hidden');
+                showError("Detailed analysis for this tool is coming soon.");
+                return;
+            }
+
+            // Meta
+            document.title = `${tool.Title} - Review & Features`;
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) metaDesc.setAttribute("content", `Review of ${tool.Title}. ${tool.Description}`);
+
+            // Hero
+            setSrc('hero-logo', tool.Logo);
+            setText('tool-category', cleanCategory(tool.Category));
+            setText('hero-title', tool.Title);
+            setText('hero-tagline', tool.Description);
+
+            // Visit buttons
+            document.querySelectorAll('#visit-btn, #visit-btn-bottom').forEach(a => a.href = tool.Link || '#');
+
+            // Content sections
+            setHTML('features-list', formatList(tool['Key Features']));
+            setText('pricing-text', "Free/Freemium. This may vary. Please check the official website.");
+            setHTML('pros-content', formatList(tool.Pros));
+            setHTML('cons-content', formatList(tool.Cons));
+
+            // Dynamic tool name spans
+            document.querySelectorAll('.tool-name-span').forEach(el => el.textContent = tool.Title);
+
+            // Conclusion
+            const descSnippet  = (tool.Description || '').split('.')[0];
+            const conclusion   = `If you're looking for a tool in the ${cleanCategory(tool.Category)} space, ${tool.Title} is worth checking out. It aims to streamline your workflow with AI capabilities tailored for ${descSnippet}.`;
+            setText('conclusion-text', conclusion);
+
+            loadingView.classList.add('hidden');
+            toolView.classList.remove('hidden');
+        }
+
+        function showError(msg) {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('tool-view').classList.add('hidden');
+            const statusView = document.getElementById('status-view');
+            statusView.classList.remove('hidden');
+            document.getElementById('status-message').textContent = msg;
+        }
+
+        // --- Helpers ---
+        function setText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text || '';
+        }
+        function setHTML(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html || '';
+        }
+        function setSrc(id, src) {
+            const el = document.getElementById(id);
+            if (el) el.src = (src && src.trim()) ? src : 'https://placehold.co/80x80/e2e8f0/64748b?text=AI';
+        }
+        function cleanCategory(cat) {
+            if (!cat) return "AI Tool";
+            return cat.replace(/#/g, '').replace(/\+\d+/, '').replace('AIxploria Selection', '').trim();
+        }
+        function formatList(text) {
+            if (!text) return '';
+            if (text.includes('<li>')) return text;
+            const lines = text.split(/\n|\*/).filter(l => l.trim().length > 0);
+            return `<ul class="list-disc pl-5 space-y-2">` +
+                   lines.map(l => `<li>${l.trim()}</li>`).join('') +
+                   `</ul>`;
+        }
+    </script>
+</body>
+</html>
