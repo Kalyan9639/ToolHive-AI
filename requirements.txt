@@ -2,4 +2,3 @@ agno
 google-genai
 ddgs
 bs4
-pandas
