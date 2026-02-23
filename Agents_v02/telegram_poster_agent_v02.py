@@ -143,14 +143,14 @@ class TelegramAutoPoster:
 if __name__ == "__main__":
     # Master entrypoint — run this file to start everything.
     # Launches scraper+generator and Telegram poster concurrently.
-    from slug_web_scrapping_agent_v03 import AI_Tool_Agent
+    from slug_web_scrapping_agent_v04 import AI_Tool_Agent
     from slug_generator_agent_v03 import ContentGenerator
 
     START_URL   = "https://www.aixploria.com/en/free-ai/"
     OUTPUT_FILE = "ai_tools.json"
 
     generator = ContentGenerator(output_json=OUTPUT_FILE)
-    scraper   = AI_Tool_Agent(start_url=START_URL, output_file=OUTPUT_FILE, interval_seconds=5)
+    scraper   = AI_Tool_Agent(start_url=START_URL, output_file=OUTPUT_FILE, interval_seconds=28800) # Scrape every 8 hours
     poster    = TelegramAutoPoster(json_file=OUTPUT_FILE)
 
     async def main():
